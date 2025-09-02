@@ -1,4 +1,7 @@
 
+using InfrastructureLayer.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace ControllerLayer
 {
     public class Program
@@ -15,6 +18,10 @@ namespace ControllerLayer
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+
+            // Cấu hình DbContext
+            builder.Services.AddDbContext<UserDbContext>(options =>
+                options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
